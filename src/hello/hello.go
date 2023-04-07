@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"reflect"
 )
 
@@ -29,8 +30,10 @@ func main() {
 		fmt.Println("Exibindo Logs...")
 	case 0:
 		fmt.Println("Saindo do Programa...")
+		os.Exit(0)
 	default:
 		fmt.Println("Comando inválido.")
+		os.Exit(-1)
 	}
 
 }
