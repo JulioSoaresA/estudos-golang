@@ -5,7 +5,11 @@ import (
 	"net/http"
 	"os"
 	"reflect"
+	"time"
 )
+
+const monitoramentos = 2
+const delay = 2
 
 func main() {
 	exibeIntro()
@@ -54,7 +58,8 @@ func exibeIntro() {
 }
 
 func exibeMenu() {
-	fmt.Println("\n1- Iniciar Monitoramento")
+	fmt.Println("")
+	fmt.Println("1- Iniciar Monitoramento")
 	fmt.Println("2- Exibir Logs")
 	fmt.Println("0- Sair do Programa")
 	fmt.Println("Escolha uma opção: ")
@@ -67,8 +72,25 @@ func lerComando() int {
 }
 
 func iniciarMonitoramento() {
+	sites := []string{
+		"https://random-status-code.herokuapp.com",
+		"https://www.alura.com.br",
+		"https://www.caelum.com.br",
+		"https://www.google.com.br",
+	}
+
 	fmt.Println("Monitorando...")
-	site := "https://random-status-code.herokuapp.com"
+
+	for i := 0; i < monitoramentos; i++ {
+		for _, site := range sites {
+			testaSite(site)
+		}
+		fmt.Println("")
+		time.Sleep(delay * time.Second)
+	}
+}
+
+func testaSite(site string) {
 	resp, _ := http.Get(site)
 
 	if resp.StatusCode == 200 {
