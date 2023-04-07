@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 	"os"
 	"reflect"
 )
@@ -9,33 +10,34 @@ import (
 func main() {
 	exibeIntro()
 
-	exibeMenu()
+	for {
+		exibeMenu()
 
-	comando := lerComando()
+		comando := lerComando()
 
-	// if comando == 1 {
-	// 	fmt.Println("Monitorando...")
-	// } else if comando == 2 {
-	// 	fmt.Println("Exibindo Logs...")
-	// } else if comando == 0 {
-	// 	fmt.Println("Saindo do Programa...")
-	// } else {
-	// 	fmt.Println("Comando inválido.")
-	// }
+		// if comando == 1 {
+		// 	fmt.Println("Monitorando...")
+		// } else if comando == 2 {
+		// 	fmt.Println("Exibindo Logs...")
+		// } else if comando == 0 {
+		// 	fmt.Println("Saindo do Programa...")
+		// } else {
+		// 	fmt.Println("Comando inválido.")
+		// }
 
-	switch comando {
-	case 1:
-		fmt.Println("Monitorando...")
-	case 2:
-		fmt.Println("Exibindo Logs...")
-	case 0:
-		fmt.Println("Saindo do Programa...")
-		os.Exit(0)
-	default:
-		fmt.Println("Comando inválido.")
-		os.Exit(-1)
+		switch comando {
+		case 1:
+			iniciarMonitoramento()
+		case 2:
+			fmt.Println("Exibindo Logs...")
+		case 0:
+			fmt.Println("Saindo do Programa...")
+			os.Exit(0)
+		default:
+			fmt.Println("Comando inválido.")
+			os.Exit(-1)
+		}
 	}
-
 }
 
 func exibeIntro() {
@@ -62,4 +64,16 @@ func lerComando() int {
 	var comando int
 	fmt.Scan(&comando)
 	return comando
+}
+
+func iniciarMonitoramento() {
+	fmt.Println("Monitorando...")
+	site := "https://random-status-code.herokuapp.com"
+	resp, _ := http.Get(site)
+
+	if resp.StatusCode == 200 {
+		fmt.Println("Site:", site, "foi carregado com sucesso.")
+	} else {
+		fmt.Println("Site:", site, "está com problemas. Status Code:", resp.StatusCode)
+	}
 }
