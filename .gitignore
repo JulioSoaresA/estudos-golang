@@ -1,1 +1,3 @@
 src/hello/log.txt
+bin*
+pkg*
