@@ -33,4 +33,16 @@ func main() {
 
 	status, valor := contaDaMonalisa.Depositar(500.90)
 	fmt.Println(status, valor)
+
+	clienteJunior := clientes.Titular{
+		Nome:      "Junior",
+		CPF:       "123.456.789-10",
+		Profissao: "Autonomo"}
+
+	contaDoJunior := contas.ContaPoupanca{
+		Titular:       clienteJunior,
+		NumeroAgencia: 123,
+		NumeroConta:   123456,
+		Operacao:      10}
+	fmt.Println(contaDoJunior)
 }
