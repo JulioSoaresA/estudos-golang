@@ -1,22 +1,36 @@
 package main
 
 import (
+	"banco/clientes"
 	"banco/contas"
 	"fmt"
 )
 
 func main() {
-	contaDoJulio := contas.ContaCorrente{Titular: "Julio", NumeroAgencia: 589, NumeroConta: 123456, Saldo: 125.50}
+	clienteJulio := clientes.Titular{
+		Nome:      "Júlio",
+		CPF:       "123.456.789-10",
+		Profissao: "Programador"}
 
-	fmt.Println("Saldo da conta do Julio: ", contaDoJulio.Saldo)
+	contaDoJulio := contas.ContaCorrente{
+		Titular:       clienteJulio,
+		NumeroAgencia: 589,
+		NumeroConta:   123456}
+	fmt.Println("Saldo da conta do Júlio é", contaDoJulio.ObterSaldo())
+	fmt.Println(contaDoJulio.Depositar(100.25))
+	fmt.Println("Saldo da conta do Júlio é", contaDoJulio.ObterSaldo())
 
-	contaDaMonalisa := contas.ContaCorrente{Titular: "Monalisa", NumeroAgencia: 589, NumeroConta: 123457, Saldo: 500}
+	clienteMonalisa := clientes.Titular{
+		Nome:      "Monalisa",
+		CPF:       "987.654.321-10",
+		Profissao: "Programadora"}
 
-	fmt.Println("Saldo da conta da Monalisa: ", contaDaMonalisa.Saldo)
+	contaDaMonalisa := contas.ContaCorrente{
+		Titular:       clienteMonalisa,
+		NumeroAgencia: 123,
+		NumeroConta:   654321}
+	fmt.Println("Saldo da conta da Monalisa é", contaDaMonalisa.ObterSaldo())
 
-	status := contaDoJulio.Transferir(150, &contaDaMonalisa)
-	fmt.Println(status)
-	fmt.Println("Saldo da conta do Julio: ", contaDoJulio.Saldo)
-	fmt.Println("Saldo da conta da Monalisa: ", contaDaMonalisa.Saldo)
-
+	status, valor := contaDaMonalisa.Depositar(500.90)
+	fmt.Println(status, valor)
 }
