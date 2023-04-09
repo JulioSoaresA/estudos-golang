@@ -29,6 +29,16 @@ func (c *ContaCorrente) Depositar(valorDoDeposito float64) (string, float64) {
 	}
 }
 
+func (c *ContaCorrente) Transferir(valorDaTransferencia float64, contaDestino *ContaCorrente) string {
+	if valorDaTransferencia > 0 && valorDaTransferencia <= c.saldo {
+		c.saldo -= valorDaTransferencia
+		contaDestino.Depositar(valorDaTransferencia)
+		return "Transferência realizada com sucesso"
+	} else {
+		return "Falha ao realizar transferência."
+	}
+}
+
 func main() {
 	contaDoJulio := ContaCorrente{}
 	contaDoJulio.titular = "Julio"
@@ -36,7 +46,7 @@ func main() {
 	contaDoJulio.numeroConta = 123456
 	contaDoJulio.saldo = 125.50
 
-	fmt.Println(contaDoJulio.saldo)
+	fmt.Println("Saldo da conta do Julio: ", contaDoJulio.saldo)
 
 	contaDaMonalisa := ContaCorrente{}
 	contaDaMonalisa.titular = "Monalisa"
@@ -44,10 +54,11 @@ func main() {
 	contaDaMonalisa.numeroConta = 123457
 	contaDaMonalisa.saldo = 500
 
-	fmt.Println(contaDoJulio.Sacar(-100))
-	fmt.Println(contaDoJulio.saldo)
-	status, valor := contaDoJulio.Depositar(-100)
-	fmt.Println(status, valor)
-	fmt.Println(contaDoJulio.saldo)
+	fmt.Println("Saldo da conta da Monalisa: ", contaDaMonalisa.saldo)
+
+	status := contaDoJulio.Transferir(150, &contaDaMonalisa)
+	fmt.Println(status)
+	fmt.Println("Saldo da conta do Julio: ", contaDoJulio.saldo)
+	fmt.Println("Saldo da conta da Monalisa: ", contaDaMonalisa.saldo)
 
 }
