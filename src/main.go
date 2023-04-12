@@ -15,7 +15,7 @@ func main() {
 	array.Add(4)
 	array.Add(5)
 	array.Add(6)
-	fmt.Println(array)
+	array.Display()
 	array.RemoveOnIndex(2)
-	fmt.Println(array)
+	array.Display()
 }

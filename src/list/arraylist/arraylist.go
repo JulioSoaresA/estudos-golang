@@ -1,6 +1,9 @@
 package arraylist
 
-import "errors"
+import (
+	"errors"
+	"fmt"
+)
 
 type ArrayList struct {
 	values []int
@@ -93,4 +96,11 @@ func (l *ArrayList) Set(value int, index int) error {
 
 func (l *ArrayList) Size() int {
 	return l.size
+}
+
+func (l *ArrayList) Display() {
+	for i := 0; i < l.size; i++ {
+		fmt.Print(l.values[i], " ")
+	}
+	fmt.Println()
 }
