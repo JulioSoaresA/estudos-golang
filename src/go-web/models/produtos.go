@@ -55,3 +55,15 @@ func CriaNovoProduto(nome, descricao string, preco float64, quantidade int) {
 	insert.Exec(nome, descricao, preco, quantidade)
 	defer db.Close()
 }
+
+func DeletaProduto(id string) {
+	db := db.ConectaBD()
+
+	delete, err := db.Prepare("delete from produtos where id=$1")
+	if err != nil {
+		panic(err.Error())
+	}
+
+	delete.Exec(id)
+	defer db.Close()
+}
